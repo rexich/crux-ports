@@ -1,0 +1,20 @@
+# Description:      Diamond swapping game like Bejeweled
+# URL:              http://gweled.org/
+# Maintainer:       Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:       librsvg libmikmod
+
+name=gweled
+version=0.9.1
+release=2
+source=(http://launchpad.net/gweled/trunk/$version/+download/$name-$version.tar.gz)
+
+build() {
+    cd $name-$version
+
+    ./configure --prefix=/usr --mandir=/usr/man --disable-nls
+    make
+    make DESTDIR=$PKG install
+
+    # Remove unnecessary cruft
+    rm -r $PKG/usr/share/locale
+}

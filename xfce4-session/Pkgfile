@@ -1,0 +1,29 @@
+# Description: Session manager for xfce4
+# URL: http://www.xfce.org
+# Maintainer: Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on: libxfce4util libxfce4ui libwnck xorg-xinit xorg-iceauth sudo
+# Group: xfce4
+
+name=xfce4-session
+version=4.12.1
+release=1
+source=(http://archive.xfce.org/src/xfce/$name/${version%.*}/$name-$version.tar.bz2 disable-verbose-logging.patch)
+
+build () {
+  cd $name-$version
+  patch -p0 -i $SRC/disable-verbose-logging.patch
+
+  ./configure --prefix=/usr \
+              --mandir=/usr/man \
+              --libexecdir=/usr/lib/xfce4 \
+              --disable-static \
+              --disable-debug
+
+  make
+  make DESTDIR=$PKG install
+
+  rm -rf $PKG/usr/share/{locale,doc}
+  find $PKG/usr/share -type f -name '*.desktop' \
+    -exec sed -r '/\[.+\]=/d' -i {} \;
+}
+

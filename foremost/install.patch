@@ -1,0 +1,29 @@
+--- foremost-1.5.7/Makefile.orig	2014-01-23 22:33:16.138450673 +0100
++++ foremost-1.5.7/Makefile	2014-01-23 22:42:06.375821793 +0100
+@@ -24,9 +24,10 @@
+ RAW_FLAGS += -DVERSION=\"$(VERSION)\"
+ 
+ # Where we get installed
+-BIN = /usr/local/bin
+-MAN = /usr/share/man/man8
+-CONF= /usr/local/etc
++DESTDIR =
++BIN = /usr/bin
++MAN = /usr/man/man8
++CONF= /etc
+ # Setup for compiling and cross-compiling for Windows
+ # The CR_ prefix refers to cross compiling from OSX to Windows
+ CR_CC = $(CR_BASE)/gcc
+@@ -118,9 +119,9 @@
+ #---------------------------------------------------------------------
+ 
+ install: goals
+-	install -m 755 $(NAME) $(BIN)
+-	install -m 444 $(MAN_PAGES) $(MAN)
+-	install -m 444 foremost.conf $(CONF)
++	install -m 755 -D $(NAME) $(DESTDIR)$(BIN)/$(NAME)
++	install -m 444 -D $(MAN_PAGES) $(DESTDIR)$(MAN)/$(MAN_PAGES)
++	install -m 444 -D foremost.conf $(DESTDIR)$(CONF)/foremost.conf
+ macinstall: BIN = /usr/local/bin/
+ macinstall: MAN = /usr/share/man/man1/
+ macinstall: CONF = /usr/local/etc/

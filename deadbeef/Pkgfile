@@ -1,0 +1,26 @@
+# Description:      The ultimate music player for Linux 
+# URL:              http://deadbeef.sourceforge.net/
+# Maintainer:       Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:       gtk2 ffmpeg faad2 libmad libsamplerate jansson
+
+
+name=deadbeef
+version=0.7.2
+release=1
+source=(http://downloads.sourceforge.net/project/$name/$name-$version.tar.bz2)
+
+build() {
+    cd $name-$version
+
+    ./configure --prefix=/usr \
+        --disable-{nls,nullout,oss,pulse,coreaudio,gtk3,notify,lfm} \
+        --disable-{sid,ffap,vtx,wavpack,cdda{,-paranoia},gme,musepack} \
+        --disable-{wildmidi,tta,vfs-zip,sc68} \
+        --enable-converter
+
+    make
+    make DESTDIR=$PKG install
+
+    # Remove unnecessary cruft
+    rm -rf $PKG/usr/share/{locale,doc}
+}

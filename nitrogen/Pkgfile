@@ -1,0 +1,23 @@
+# Description: Wallpaper setting tool for X, used with window managers
+# URL: http://projects.l3ib.org/nitrogen/
+# Maintainer: Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on: gtkmm librsvg
+
+name=nitrogen
+version=1.5.2
+release=1
+source=(http://projects.l3ib.org/nitrogen/files/nitrogen-$version.tar.gz)
+
+
+build() {
+	cd nitrogen-$version
+
+	export LDFLAGS="$LDFLAGS -lX11"
+
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/man
+
+	make
+	make DESTDIR=$PKG install
+}

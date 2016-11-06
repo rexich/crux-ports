@@ -1,0 +1,22 @@
+# Description: Multi-panel tabbed file manager
+# URL:         http://ignorantguru.github.com/spacefm/
+# Maintainer:  Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:  gtk udev shared-mime-info desktop-file-utils xorg-libxdamage
+
+name=spacefm
+version=1.0.4
+release=1
+source=(https://github.com/IgnorantGuru/$name/archive/$version.tar.gz)
+
+build () {
+    cd $name-$version
+    #patch -p1 < $SRC/f167b2831bc2556fc383cf30ae6ce4d117b67c04.patch
+    ./configure --prefix=/usr \
+        --disable-nls \
+        --with-gtk2 \
+        --disable-video-thumbnails
+    make
+    make DESTDIR=$PKG \
+        install
+    rm -rf $PKG/usr/share/{locale,doc}
+}

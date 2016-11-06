@@ -1,0 +1,24 @@
+# Description:      Fast and simple GTK+ image viewer
+# URL:              http://xsisqox.github.io/Viewnior/
+# Maintainer:       Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:       gtk exiv2
+
+# Build dependencies: gnome-common
+
+
+name=viewnior
+version=1.6
+release=1
+source=(https://github.com/xsisqox/Viewnior/archive/$name-$version.tar.gz)
+
+build() {
+    cd Viewnior-$name-$version
+
+    ./autogen.sh
+    ./configure --prefix=/usr --disable-nls
+    make
+    make DESTDIR=$PKG install
+
+    # Remove unnecessary cruft
+    rm -r $PKG/usr/share/locale
+}

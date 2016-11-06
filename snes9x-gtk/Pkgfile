@@ -1,0 +1,49 @@
+# Description: Snes9x - Portable Super Nintendo Entertainment System (TM) emulator - gtk frontend
+# URL:  https://github.com/snes9xgit/snes9x
+# Packager: Neville Phillips, nogagplz at gmail dot com
+# Maintainer: Neville Phillips, nogagplz at gmail dot com
+# Depends on: git libsdl
+
+name=snes9x-gtk
+version=git-f99daae
+sversion=f99daae5fb4cd023881c4400dc6351c3c20f4895
+release=1
+source=(snes9x-master.zip)
+
+build() {
+	#~ cd $PKGMK_SOURCE_DIR
+	#~ if cd $name; then
+		#~ git pull --rebase git://github.com/snes9xgit/snes9x.git master
+		#~ git checkout $sversion
+	#~ else
+		#~ git clone git://github.com/snes9xgit/snes9x.git $name
+		#~ cd $name
+		#~ git checkout $sversion
+	#~ fi
+	#~ cp -r $PKGMK_SOURCE_DIR/$name $SRC
+
+	chmod 777 -R $SRC
+	cd $SRC/snes9x-master/gtk
+
+#	CXXFLAGS="${CFLAGS//-flto/}" CFLAGS="${CFLAGS//-flto/}" LDFLAGS="${LDFLAGS//-flto/}"
+#	CXXFLAGS="${CFLAGS//-fvisibility-inlines-hidden/}"
+
+	./autogen.sh
+	./configure --prefix=/usr \
+		--with-screenshot \
+		--with-zlib \
+		--with-newblend \
+		--with-jma-decomp \
+		--without-netplay \
+		--without-hq2x \
+		--with-sdd1-decomp \
+		--with-alsa \
+		--without-portaudio \
+		--with-xrandr \
+		--with-xv \
+		--with-joystick \
+		--with-opengl		
+	
+	make all
+	make DESTDIR=$PKG install
+}

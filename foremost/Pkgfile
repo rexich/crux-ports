@@ -1,0 +1,20 @@
+# Description:      Forensic data extraction and recovery tool
+# URL:              http://foremost.sourceforge.net/
+# Maintainer:       Filip Božanić Dimovski, rexich at riseup dot net
+# Packager:         Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:       
+
+
+name=foremost
+version=1.5.7
+release=2
+source=(http://foremost.sourceforge.net/pkg/$name-$version.tar.gz install.patch)
+
+build() {
+    cd $name-$version
+
+    patch -p1 -i $SRC/install.patch
+
+    make
+    make DESTDIR=$PKG install
+}

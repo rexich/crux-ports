@@ -1,0 +1,20 @@
+# Description: Monitor configuring tool
+# URL: http://lxde.org
+# Maintainer: Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on: gtk, xorg-xrandr
+# Group: lxde
+
+name=lxrandr
+version=0.3.1
+release=1
+source=(http://sourceforge.net/projects/lxde/files/LXRandR%20%28monitor%20config%20tool%29/LXRandR%200.3.x/$name-$version.tar.xz)
+
+build() {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG install
+
+    # Remove cruft
+    rm -rf $PKG/usr/share/locale
+}

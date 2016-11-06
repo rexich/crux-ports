@@ -1,0 +1,41 @@
+﻿Hello, I'm trying to connect to the internet directly over PPPoE. At the moment (to write this message) I use wi-fi router which is already configured by me. I've read arch wiki on pppd package, but after several attempts it didn't succeed.
+What I did:
+
+sudo pacman -S pppd rp-pppoe
+
+Added config file at /etc/ppp/peers/letai as it was suggested on wiki:
+
+plugin rp‐pppoe.so 
+# rp_pppoe_ac 'your ac name' 
+# rp_pppoe_service 'letai'
+# eno1 is taken from "ip link"
+eno1
+name "MYLOGIN" 
+usepeerdns 
+persist 
+defaultroute 
+hide‐password 
+noauth
+
+Changed one line at /etc/ppp/pppoe.conf:
+
+# Ethernet card connected to DSL modem
+ETH=eno1
+
+Added password to chap- and pap-secrets files:
+
+# Secrets for authentication using CHAP
+# client	server	secret			IP addresses
+"MYLOGIN"	*	"MYPASS"
+
+And lastly I tried to start it:
+
+sudo pppd call letai
+pppd: In file /etc/ppp/peers/letai: unrecognized option 'plugin rp‐pppoe.so '
+
+sudo pppd
+Couldn't open the /dev/ppp device: No such device or address
+pppd: Please load the ppp_generic kernel module.
+
+Any suggestions how to solve the problem?
+Thank you in advance

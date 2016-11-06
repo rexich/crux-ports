@@ -1,0 +1,8 @@
+drwxr-xr-x	root/root	etc/
+-r--r--r--	root/root	etc/foremost.conf
+drwxr-xr-x	root/root	usr/
+drwxr-xr-x	root/root	usr/bin/
+-rwxr-xr-x	root/root	usr/bin/foremost
+drwxr-xr-x	root/root	usr/man/
+drwxr-xr-x	root/root	usr/man/man8/
+-r--r--r--	root/root	usr/man/man8/foremost.8.gz

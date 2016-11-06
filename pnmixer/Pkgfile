@@ -1,0 +1,19 @@
+# Description: GTK volume mixer applet that runs in the system tray
+# URL:         https://github.com/nicklan/pnmixer
+# Maintainer:  Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:  alsa-lib gtk libnotify
+
+name=pnmixer
+version=0.6.1
+release=1
+source=(https://github.com/nicklan/$name/releases/download/v0.6/$name-$version.tar.gz)
+
+build() {
+    cd $name-$version
+
+    ./autogen.sh --without-gtk3 --prefix=/usr
+    make V=0
+
+    make DESTDIR=$PKG install
+    rm -rf "$PKG/usr/share/locale"
+}

@@ -1,0 +1,16 @@
+# Description: Parcellite is a lightweight GTK+ clipboard manager
+# URL: http://parcellite.sourceforge.net
+# Maintainer: Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on: gtk
+
+name=parcellite
+version=1.1.6
+release=1
+source=(http://dl.sourceforge.net/sourceforge/$name/$name-$version.tar.gz)
+
+build() {
+    cd $name-$version
+    ./configure --prefix=/usr --mandir=/usr/man --disable-nls
+    make
+    make DESTDIR=$PKG install
+}

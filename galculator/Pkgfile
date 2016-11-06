@@ -1,0 +1,22 @@
+# Description: A GTK+ based scientific calculator
+# URL:         http://galculator.sourceforge.net
+# Maintainer:  Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on:  gtk
+
+name=galculator
+version=2.1.4
+release=1
+source=(http://galculator.mnim.org/downloads/$name-$version.tar.bz2)
+
+build() {
+    cd $name-$version
+
+    ./configure --prefix=/usr \
+                --disable-nls \
+                --disable-gtk3
+    make
+    make DESTDIR=$PKG install
+
+    # Remove locales
+    rm -rf $PKG/usr/share/locale
+}

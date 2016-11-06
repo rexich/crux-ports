@@ -1,0 +1,25 @@
+# Description: GTK partition editor and manager
+# URL: http://gparted.sourceforge.net/
+# Maintainer: Filip Božanić Dimovski, rexich at riseup dot net
+# Depends on: gtkmm parted p5-xml-Parser xorg-libxcomposite xorg-xcb-util
+
+name=gparted
+version=0.26.1
+release=1
+source=(http://downloads.sourceforge.net/sourceforge/$name/$name-$version.tar.gz)
+up2date_url="http://sourceforge.net/projects/$name/files/"
+
+build() {
+    cd $name-$version
+
+    ./configure \
+        --prefix=/usr \
+        --disable-nls \
+        --disable-static \
+        --disable-dependency-tracking \
+        --disable-doc \
+        --enable-online-resize
+
+    make
+    make DESTDIR=$PKG install
+}
